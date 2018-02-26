@@ -1,5 +1,5 @@
 package hanga_gubbe_main;
 
-public class hangaGubbe {
+public class printMan {
 
 }
