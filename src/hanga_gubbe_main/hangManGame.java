@@ -73,10 +73,11 @@ public class hangManGame {
 			win = false;
 			lose = false;
 			char guessedLetter = '-';
+			String guessedString = "-";
 			
 			for(int j = 1 ; j <= 1 ; j--){
 				console.println(guessedArr.toString() + "|| Vilken bokstav gissar du på?");
-				String guessedString = console.nextString();
+				guessedString = console.nextString();
 			
 				if(guessedString.length() > 1){
 					console.println("Du kan bara gissa på en bokstav. Försök igen");
@@ -97,12 +98,13 @@ public class hangManGame {
 					else{
 						wrongGuess();
 					}
-					
+					allGuessedLetters.add(guessedString);
 				}
 				
 				else{
 					console.println("Du har redan gissat det försök igen");
-				}				
+				}
+				
 			}
 			
 		}
