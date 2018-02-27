@@ -32,7 +32,7 @@ public class hangManGame {
 			
 			console.println("What should the secret word?");
 			
-			secretWord.add(console.nextString());
+			secretWord.add(console.nextString().split(" ")[0]);
 			console.clear();
 			
 			String secretString = secretWord.toString(); 
@@ -41,6 +41,7 @@ public class hangManGame {
 			for(int i = 0 ; i < secretString.length() ; i++) {
 				guessedArr[i] = '_';
 			}
+			
 			for(int j = 1 ; j <= 1 ; j--){
 				console.println("How many lives would you like to have? 1(EASY) or 2(MEDIUM) or 3(HARD)?");
 			
@@ -116,7 +117,9 @@ public class hangManGame {
 		private static void wrongGuess(){
 			lives--;
 			
-			printMan.print(lives);
+			printMan.print(lives); 
+			
+			
 		}
 		
 }
