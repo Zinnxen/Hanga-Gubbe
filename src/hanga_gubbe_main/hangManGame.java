@@ -107,12 +107,14 @@ public class hangManGame {
 			
 		}
 		
-		private static void rightGuess(){
-			
+		private static void rightGuess(){			
+			print();
 		}
 
 		private static void wrongGuess(){
+			lives--;
 			
+			print();
 		}
 		
 }
