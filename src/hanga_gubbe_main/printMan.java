@@ -1,6 +1,10 @@
 package hanga_gubbe_main;
+import java.io.Console;
 
+import jaok.HangmanConsoleWindow;
 public class printMan {
+	
+	private static HangmanConsoleWindow console;
 	
 	public static void print(int lives) {
 		

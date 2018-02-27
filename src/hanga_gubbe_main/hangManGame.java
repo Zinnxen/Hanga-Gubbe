@@ -110,13 +110,13 @@ public class hangManGame {
 		}
 		
 		private static void rightGuess(){			
-			print();
+			printMan.print(lives);
 		}
 
 		private static void wrongGuess(){
 			lives--;
 			
-			print();
+			printMan.print(lives);
 		}
 		
 }
