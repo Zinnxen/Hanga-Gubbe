@@ -20,7 +20,7 @@ public class hangManGame {
 	
 	private static boolean lose;
 	
-	private static ArrayList<String> guessedWord = new ArrayList<String>();
+	private static ArrayList<String> allGuessedLetters = new ArrayList<String>();
 
 	private static ArrayList<String> secretWord = new ArrayList<String>();
 	
@@ -89,7 +89,7 @@ public class hangManGame {
 				
 			}
 			while(lives > 0 && !win){
-				if(!guessedWord.contains(guessedLetter)){				
+				if(!allGuessedLetters.contains(guessedLetter)){				
 					if(secretWord.contains(guessedLetter)){
 						rightGuess();
 					}
