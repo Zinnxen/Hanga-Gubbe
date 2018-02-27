@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import jaok.HangmanConsoleWindow;
+import sun.applet.Main;
 
 
 public class hangManGame {
@@ -12,15 +13,18 @@ public class hangManGame {
 	public static int lives;
 	
 	public static int difficulty;
-
-	private static ArrayList<String> guesseWord = new ArrayList<String>();
+	
+	private static char[] guessedArr;
+	
+	private static boolean win;
+	
+	private static boolean lose;
+	
+	private static ArrayList<String> guessedWord = new ArrayList<String>();
 
 	private static ArrayList<String> secretWord = new ArrayList<String>();
 	
-	private static Scanner input = new Scanner(System.in);
-	
 	private static HangmanConsoleWindow console;
-		
 	
 	
 		private static void gameStart(){
@@ -32,7 +36,7 @@ public class hangManGame {
 			console.clear();
 			
 			String secretString = secretWord.toString(); 
-			char[] guessedArr = secretString.toCharArray();
+			guessedArr = (secretString.toUpperCase()).toCharArray();
 			
 			for(int i = 0 ; i < secretString.length() ; i++) {
 				guessedArr[i] = '_';
@@ -46,20 +50,68 @@ public class hangManGame {
 			
 				if(difficulty == 1){
 					lives = 10;
-					j = j + 3;
+					j =+ 3;
 				}
 				else if(difficulty == 2){
 					lives = 7;
-					j = j + 3;
+					j =+ 3;
 				}
 				else if(difficulty == 3){
 					lives = 5;
-					j = j + 3;
+					j =+ 3;
 				}
 				else{
 					console.print("Den svårighetsgraden finns inte, testa igen.");
 				}
+				
 			}
+			
+		}
+		
+		private static void guess(){
+			
+			win = false;
+			lose = false;
+			char guessedLetter = '-';
+			
+			for(int j = 1 ; j <= 1 ; j--){
+				console.println(guessedArr.toString() + "|| Vilken bokstav gissar du på?");
+				String guessedString = console.nextString();
+			
+				if(guessedString.length() > 1){
+					console.println("Du kan bara gissa på en bokstav. Försök igen");
+					j++;
+				}
+				else{
+					guessedLetter = guessedString.charAt(0);
+					j = j + 3;
+				}
+				
+			}
+			while(lives > 0 && !win){
+				if(!guessedWord.contains(guessedLetter)){				
+					if(secretWord.contains(guessedLetter)){
+						rightGuess();
+					}
+					
+					else{
+						wrongGuess();
+					}
+					
+				}
+				
+				else{
+					console.println("Du har redan gissat det försök igen");
+				}				
+			}
+			
+		}
+		
+		private static void rightGuess(){
+			
+		}
+
+		private static void wrongGuess(){
 			
 		}
 		
