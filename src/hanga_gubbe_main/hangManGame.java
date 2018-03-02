@@ -112,6 +112,10 @@ public class hangManGame {
 		
 		private static void rightGuess(){			
 			printMan.print(lives);
+			
+			if(guessedArr.toString() == secretWord.toString()){
+				win = true;
+			}
 		}
 
 		private static void wrongGuess(){
