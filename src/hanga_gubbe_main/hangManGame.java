@@ -69,12 +69,14 @@ public class hangManGame {
 		console.println("Do you want to play singleplayer");
 		console.println("or multiplayer?");
 		
-		for( int j = 1 ; j <= 1 ; j++){
-			if(console.nextString().toLowerCase() == "singleplayer"){
+		for( int j = 1 ; j <= 1 ; j--){
+			String gamemodeInput = console.nextString().toLowerCase();
+			
+			if(gamemodeInput == "singleplayer"){
 				gamemode = true;
 				break;
 			}
-			else if(console.nextString().toLowerCase() == "multiplayer"){
+			else if(gamemodeInput == "multiplayer"){
 				gamemode = false;
 				break;
 			}
