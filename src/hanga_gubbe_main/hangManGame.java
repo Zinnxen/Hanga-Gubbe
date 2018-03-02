@@ -33,18 +33,35 @@ public class hangManGame {
 	public static void main(String[] args) {
 		console = new HangmanConsoleWindow();
 		
-		console.print("Welcome to hangman!");
-		console.print("Do you want to play singelplayer or mulitplayer?");
+		console.println("Welcome to hangman!");
 		
-		if(console.nextString().toLowerCase() == "singleplayer"){
-			gameStartSingleplayer();
+		gamemode();
+		
+		
+		
+		
+	}	
+	
+	public static void gamemode(){
+	
+		console.println("Do you want to play singelplayer");
+		console.println("or multiplayer?");
+		
+		for( int j = 1 ; j <= 1 ; j++){
+			if(console.nextString().toLowerCase() == "singleplayer"){
+				gameStartSingleplayer();
+			}
+			else if(console.nextString().toLowerCase() == "multiplayer"){
+				gameStartMultiplayer();
+			}
+			else{
+				console.print("That gamemode don´t exist.");
+				console.println("Try Again");
+				j++;
+			}
 		}
-		else if(console.nextString().toLowerCase() == "multiplayer"){
-			gameStartMultiplayer();
-		}
-		
-		
 	}
+	
 	public void words(File f) throws FileNotFoundException{
 		
 		Scanner fileReader = new Scanner(f);
@@ -52,17 +69,15 @@ public class hangManGame {
 		while(fileReader.hasNextLine()){
 			fileWords.add(fileReader.nextLine());
 		}
-
 		
 	}
 	private static void gameStartSingleplayer(){
-		
-		console = new HangmanConsoleWindow();
 		
 		secretWord.add(fileWords.get( (int) Math.random()*(fileWords.toArray()).length));
 		
 		
 		for(int j = 1 ; j <= 1 ; j--){
+			console.clear();
 			console.println("How many lives would you like to have? 1(EASY) or 2(MEDIUM) or 3(HARD)?");
 			
 			String diffInput = console.nextString();
@@ -91,7 +106,6 @@ public class hangManGame {
 	}
 	
 	private static void gameStartMultiplayer(){
-		console = new HangmanConsoleWindow();
 		
 		console.println("What should the secret word?");
 		
@@ -151,7 +165,7 @@ public class hangManGame {
 				}
 				else{
 					guessedLetter = guessedString.charAt(0);
-					j = j + 3;
+					j =+ 3;
 				}
 			
 			}
@@ -169,6 +183,7 @@ public class hangManGame {
 			
 			else{
 				console.println("Du har redan gissat det försök igen");
+				guess();
 			}
 			
 		}
@@ -176,10 +191,18 @@ public class hangManGame {
 	}
 	
 	private static void rightGuess(){			
-		printMan.print(lives);
+		console.clear();
 		
 		if(guessedArr.toString() == secretWord.toString()){
 			win = true;
+		}
+		else{
+			console.println("You got something right!");
+			printMan.print(lives);
+			console.println("You have typed these letters so far:");
+			console.println(allGuessedLetters.toString());
+			console.println("The word now looks at this:" + guessedArr.toString());
+			
 		}
 		
 			
@@ -187,13 +210,30 @@ public class hangManGame {
 
 	private static void wrongGuess(){
 		lives--;
+		console.clear();
+		
 		if(lives == 0){
 			lose = true;
 		}
 		else{	
 			printMan.print(lives); 
+			console.println("You have typed these letters so far:"); 
+			console.println(allGuessedLetters.toString());
+			console.println("The word looks at this:" + guessedArr.toString());
 		}
 			
+	}
+	
+	private static void gameWon(){
+		
+		
+		
+	}
+	
+	private static void gameLose(){
+		
+		
+		
 	}
 		
 }
