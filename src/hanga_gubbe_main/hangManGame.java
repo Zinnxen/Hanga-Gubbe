@@ -20,6 +20,8 @@ public class hangManGame {
 	
 	private static char[] guessedArr;
 	
+	private static String guessedWord;
+	
 	private static boolean win;
 	
 	private static boolean lose;
@@ -65,18 +67,20 @@ public class hangManGame {
 	}
 	
 	public static void gamemode(){
-	
-		console.println("Do you want to play singleplayer");
-		console.println("or multiplayer?");
+		char singleplayer =+ 's';
+		char multiplayer = 'm';
+		console.println("Do you want to play singleplayer(s)");
+		console.println("or multiplayer(m)?");
 		
 		for( int j = 1 ; j <= 1 ; j--){
-			String gamemodeInput = console.nextString().toLowerCase();
+			char gamemodeInput = console.nextChar();
 			
-			if(gamemodeInput == "singleplayer"){
+			
+			if(gamemodeInput == singleplayer){
 				gamemode = true;
 				break;
 			}
-			else if(gamemodeInput == "multiplayer"){
+			else if(gamemodeInput == multiplayer){
 				gamemode = false;
 				break;
 			}
@@ -124,7 +128,7 @@ public class hangManGame {
 				break;
 			}
 			else{
-				console.print("Den svårighetsgraden finns inte, testa igen.");
+				console.println("Den svårighetsgraden finns inte, testa igen.");
 				j++;
 			}
 				
@@ -133,7 +137,7 @@ public class hangManGame {
 	}
 	
 	private static void gameStartMultiplayer(){
-		
+		console.clear();
 		console.println("What should the secret word be?");
 		
 		secretWord.add(console.nextString().split(" ")[0]);
@@ -147,8 +151,8 @@ public class hangManGame {
 		}
 			
 		for(int j = 1 ; j <= 1 ; j--){
-			console.println("How many lives would you like to have? 1(EASY) or 2(MEDIUM) or 3(HARD)?");
-			
+			console.println("How many lives would you like to have?");
+			console.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
 			String diffInput = console.nextString();
 			
 			difficulty = Integer.parseInt(diffInput);
@@ -166,7 +170,7 @@ public class hangManGame {
 				break;
 			}
 			else{
-				console.print("Den svårighetsgraden finns inte, testa igen.");
+				console.println("Den svårighetsgraden finns inte, testa igen.");
 				j++;
 			}
 				
@@ -183,7 +187,8 @@ public class hangManGame {
 	
 		while(lives > 0 && !win){	
 			for(int j = 1 ; j <= 1 ; j--){
-				console.println(guessedArr.toString() + "|| Vilken bokstav gissar du på?");
+				guessedWord = guessedArr.toString();
+				console.println(guessedWord + "|| Vilken bokstav gissar du på?");
 				guessedString = console.nextString();
 	
 				if(guessedString.length() > 1){
