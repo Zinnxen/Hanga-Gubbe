@@ -16,6 +16,8 @@ public class hangManGame {
 	
 	public static int difficulty;
 	
+	public static boolean gamemode;		// true == singleplayer ; false == multiplayer
+	
 	private static char[] guessedArr;
 	
 	private static boolean win;
@@ -37,6 +39,13 @@ public class hangManGame {
 		
 		gamemode();
 		
+		if(gamemode == true){
+			gameStartSingleplayer();
+		}
+		else{
+			gameStartMultiplayer();
+		}
+		
 		while(win || lose == false){
 			guess();
 				
@@ -57,15 +66,17 @@ public class hangManGame {
 	
 	public static void gamemode(){
 	
-		console.println("Do you want to play singelplayer");
+		console.println("Do you want to play singleplayer");
 		console.println("or multiplayer?");
 		
 		for( int j = 1 ; j <= 1 ; j++){
 			if(console.nextString().toLowerCase() == "singleplayer"){
-				gameStartSingleplayer();
+				gamemode = true;
+				break;
 			}
 			else if(console.nextString().toLowerCase() == "multiplayer"){
-				gameStartMultiplayer();
+				gamemode = false;
+				break;
 			}
 			else{
 				console.print("That gamemode don´t exist.");
@@ -73,6 +84,7 @@ public class hangManGame {
 				j++;
 			}
 		}
+		return;
 	}
 	
 	public void words(File f) throws FileNotFoundException{
@@ -99,15 +111,15 @@ public class hangManGame {
 			
 			if(difficulty == 1){
 				lives = 10;
-				j =+ 3;
+				break;
 			}
 			else if(difficulty == 2){
 				lives = 7;
-				j =+ 3;
+				break;
 			}
 			else if(difficulty == 3){
 				lives = 5;
-				j =+ 3;
+				break;
 			}
 			else{
 				console.print("Den svårighetsgraden finns inte, testa igen.");
@@ -115,7 +127,7 @@ public class hangManGame {
 			}
 				
 		}
-		
+		return;
 	}
 	
 	private static void gameStartMultiplayer(){
@@ -141,15 +153,15 @@ public class hangManGame {
 			
 			if(difficulty == 1){
 				lives = 10;
-				j =+ 3;
+				break;
 			}
 			else if(difficulty == 2){
 				lives = 7;
-				j =+ 3;
+				break;
 			}
 			else if(difficulty == 3){
 				lives = 5;
-				j =+ 3;
+				break;
 			}
 			else{
 				console.print("Den svårighetsgraden finns inte, testa igen.");
@@ -157,7 +169,7 @@ public class hangManGame {
 			}
 				
 		}
-			
+		return;	
 	}
 		
 	private static void guess(){
@@ -178,7 +190,7 @@ public class hangManGame {
 				}
 				else{
 					guessedLetter = guessedString.charAt(0);
-					j =+ 3;
+					break;
 				}
 		
 			}
@@ -200,7 +212,7 @@ public class hangManGame {
 			}
 			
 		}
-		
+		return;
 	}
 	
 	private static void rightGuess(){			
@@ -216,9 +228,8 @@ public class hangManGame {
 			console.println(allGuessedLetters.toString());
 			console.println("The word now looks at this:" + guessedArr.toString());
 			
-		}
-		
-			
+		}	
+		return;
 	}
 
 	private static void wrongGuess(){
@@ -234,19 +245,19 @@ public class hangManGame {
 			console.println(allGuessedLetters.toString());
 			console.println("The word looks at this:" + guessedArr.toString());
 		}
-			
+		return;
 	}
 	
 	private static void gameWon(){
 		
 		console.println("won");
-		
+		return;
 	}
 	
 	private static void gameLose(){
 		
 		console.println("lose");	
-		
+		return;
 	}
 		
 }
