@@ -37,10 +37,23 @@ public class hangManGame {
 		
 		gamemode();
 		
+		while(win || lose == false){
+			guess();
+				
+			if(win == true){
+				gameWon();
+				break;
+			}
+			else if(lose == false){
+				gameLose();
+				break;
+			}
+			else{
+				continue;
+			}
 		
-		
-		
-	}	
+		}		
+	}
 	
 	public static void gamemode(){
 	
@@ -107,7 +120,7 @@ public class hangManGame {
 	
 	private static void gameStartMultiplayer(){
 		
-		console.println("What should the secret word?");
+		console.println("What should the secret word be?");
 		
 		secretWord.add(console.nextString().split(" ")[0]);
 		console.clear();
@@ -153,12 +166,12 @@ public class hangManGame {
 		lose = false;
 		char guessedLetter = '-';
 		String guessedString = "-";
-		
+	
 		while(lives > 0 && !win){	
 			for(int j = 1 ; j <= 1 ; j--){
-			console.println(guessedArr.toString() + "|| Vilken bokstav gissar du på?");
-			guessedString = console.nextString();
-		
+				console.println(guessedArr.toString() + "|| Vilken bokstav gissar du på?");
+				guessedString = console.nextString();
+	
 				if(guessedString.length() > 1){
 					console.println("Du kan bara gissa på en bokstav. Försök igen");
 					j++;
@@ -167,20 +180,20 @@ public class hangManGame {
 					guessedLetter = guessedString.charAt(0);
 					j =+ 3;
 				}
-			
-			}
 		
+			}
+	
 			if(!allGuessedLetters.contains(guessedLetter)){				
 				if(secretWord.contains(guessedLetter)){
 					rightGuess();
 				}
-				
+			
 				else{
 					wrongGuess();
 				}
 				allGuessedLetters.add(guessedString);
 			}
-			
+		
 			else{
 				console.println("Du har redan gissat det försök igen");
 				guess();
@@ -226,13 +239,13 @@ public class hangManGame {
 	
 	private static void gameWon(){
 		
-		
+		console.println("won");
 		
 	}
 	
 	private static void gameLose(){
 		
-		
+		console.println("lose");	
 		
 	}
 		
