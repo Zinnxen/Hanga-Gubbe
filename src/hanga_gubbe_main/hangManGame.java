@@ -23,6 +23,8 @@ public class hangManGame {
 	
 	private static char[] guessedArr;
 	
+	private static char[] secretArr;
+	
 	private static String guessedWord;
 	
 	private static boolean win;
@@ -35,12 +37,13 @@ public class hangManGame {
 
 	private static ArrayList<String> secretWord = new ArrayList<String>();
 	
-	private static HangmanConsoleWindow console;
+	private static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		console = new HangmanConsoleWindow();
 		
-		console.println("Welcome to hangman!");
+		
+		
+		System.out.println("Welcome to hangman!");
 		
 		gamemode();
 		
@@ -73,11 +76,11 @@ public class hangManGame {
 	public static void gamemode(){
 		char singleplayer =+ 's';
 		char multiplayer = 'm';
-		console.println("Do you want to play singleplayer(s)");
-		console.println("or multiplayer(m)?");
+		System.out.println("Do you want to play singleplayer(s)");
+		System.out.println("or multiplayer(m)?");
 		
 		for( int j = 1 ; j <= 1 ; j--){
-			char gamemodeInput = console.nextChar();
+			char gamemodeInput = sc.next().charAt(0);
 			
 			
 			if(gamemodeInput == singleplayer){
@@ -89,10 +92,10 @@ public class hangManGame {
 				break;
 			}
 			else{
-				console.clear();
-				console.print("That gamemode don´t exist.");
-				console.println("You can only put 's' or 'm' in.");
-				console.println("Try again");
+				consoleClear();
+				System.out.print("That gamemode don´t exist.");
+				System.out.println("You can only put 's' or 'm' in.");
+				System.out.println("Try again");
 				j++;
 			}
 		}
@@ -113,14 +116,16 @@ public class hangManGame {
 		
 		secretWord.add(getWord());
 		
+		for(int f = 0 ; f < secretWord.size() ; f++){
+			secretArr[f] = (secretWord.toString()).charAt(f);
+		}
+		
 		for(int j = 1 ; j <= 1 ; j--){
-			console.clear();
-			console.println("How many lives would you like to have?");
-			console.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
+			consoleClear();
+			System.out.println("How many lives would you like to have?");
+			System.out.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
 			
-			String diffInput = console.nextString();
-			
-			difficulty = Integer.parseInt(diffInput);
+			difficulty = sc.nextInt();
 			
 			if(difficulty == 10){
 				lives = 10;
@@ -135,8 +140,8 @@ public class hangManGame {
 				break;
 			}
 			else{
-				console.clear();
-				console.println("Den svårighetsgraden finns inte, testa igen.");
+				consoleClear();
+				System.out.println("Den svårighetsgraden finns inte, testa igen.");
 				j++;
 			}
 				
@@ -145,11 +150,16 @@ public class hangManGame {
 	}
 	
 	private static void gameStartMultiplayer(){
-		console.clear();
-		console.println("What should the secret word be?");
 		
-		secretWord.add(console.nextString().split(" ")[0]);
-		console.clear();
+		System.out.println("What should the secret word be?");
+		
+		secretWord.add(sc.nextLine().split(" ")[0]);
+		
+		for(int f = 0 ; f < secretWord.size() ; f++){
+			secretArr[f] += ((CharSequence) secretWord).charAt(f);
+		}
+		
+		consoleClear();
 			
 		String secretString = secretWord.toString(); 
 		guessedArr = (secretString.toUpperCase()).toCharArray();
@@ -159,9 +169,9 @@ public class hangManGame {
 		}
 			
 		for(int j = 1 ; j <= 1 ; j--){
-			console.println("How many lives would you like to have?");
-			console.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
-			String diffInput = console.nextString();
+			System.out.println("How many lives would you like to have?");
+			System.out.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
+			String diffInput = sc.nextLine();
 			
 			difficulty = Integer.parseInt(diffInput);
 			
@@ -178,8 +188,8 @@ public class hangManGame {
 				break;
 			}
 			else{
-				console.clear();
-				console.println("Den svårighetsgraden finns inte, testa igen.");
+				consoleClear();
+				System.out.println("Den svårighetsgraden finns inte, testa igen.");
 				j++;
 			}
 				
@@ -193,15 +203,16 @@ public class hangManGame {
 		lose = false;
 		char guessedLetter = '-';
 		String guessedString = "-";
-	
+		
 		while(lives > 0 && !win){	
 			for(int j = 1 ; j <= 1 ; j--){
 				
-				console.println(guessedArr.toString() + "|| Vilken bokstav gissar du på?");
-				guessedString = console.nextString();
+				System.out.println(guessedArr);
+				System.out.println("Vilken bokstav gissar du på?");
+				guessedString = sc.nextLine();
 	
 				if(guessedString.length() > 1){
-					console.println("Du kan bara gissa på en bokstav. Försök igen");
+					System.out.println("Du kan bara gissa på en bokstav. Försök igen");
 					j++;
 				}
 				else{
@@ -212,18 +223,21 @@ public class hangManGame {
 			}
 	
 			if(!allGuessedLetters.contains(guessedLetter)){				
+				allGuessedLetters.add(guessedString);
+				
 				if(secretWord.contains(guessedLetter)){
 					rightGuess();
+					
 				}
 			
 				else{
 					wrongGuess();
 				}
-				allGuessedLetters.add(guessedString);
+				
 			}
 		
 			else{
-				console.println("Du har redan gissat det försök igen");
+				System.out.println("Du har redan gissat det försök igen");
 				guess();
 			}
 			
@@ -232,17 +246,23 @@ public class hangManGame {
 	}
 	
 	private static void rightGuess(){			
-		console.clear();
+		consoleClear();
 		
 		if(guessedArr.toString() == secretWord.toString()){
 			win = true;
 		}
 		else{
-			console.println("You got something right!");
+			for(int i = 0 ; i < secretWord.size() ; i++){
+				if(guessedArr[i] == secretArr[i]){
+					guessedArr[i] += secretArr[i];
+				}
+			}
+			
+			System.out.println("You got something right!");
 			printMan.print(lives);
-			console.println("You have typed these letters so far:");
-			console.println(allGuessedLetters.toString());
-			console.println("The word now looks at this:" + guessedArr.toString());
+			System.out.println("You have typed these letters so far:");
+			System.out.println(allGuessedLetters.toString());
+			System.out.println("The word now looks at this:");
 			
 		}	
 		return;
@@ -250,17 +270,17 @@ public class hangManGame {
 
 	private static void wrongGuess(){
 		lives--;
-		console.clear();
+		consoleClear();
 		
 		if(lives == 0){
 			lose = true;
 		}
 		else{	
 			printMan.print(lives); 
-			console.println("You got it Wrong");
-			console.println("You have typed these letters so far:"); 
-			console.println(allGuessedLetters.toString());
-			console.println("The word looks at this:" + guessedArr.toString());
+			System.out.println("You got it Wrong");
+			System.out.println("You have typed these letters so far:"); 
+			System.out.println(allGuessedLetters.toString());
+			System.out.println("The word looks at this:" + guessedArr.toString());
 		}
 		return;
 	}
@@ -272,13 +292,28 @@ public class hangManGame {
 	
 	private static void gameWon(){
 		
-		console.println("won");
+		System.out.println("won");
 		return;
 	}
 	
 	private static void gameLose(){
 		
-		console.println("lose");	
+		System.out.println("lose");	
+		return;
+	}
+
+	private static void consoleClear(){
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
 		return;
 	}
 		
