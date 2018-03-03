@@ -3,6 +3,7 @@ package hanga_gubbe_main;
 import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -85,27 +86,27 @@ public class hangManGame {
 				break;
 			}
 			else{
+				console.clear();
 				console.print("That gamemode don´t exist.");
-				console.println("Try Again");
+				console.println("You can only put 's' or 'm' in.");
+				console.println("Try again");
 				j++;
 			}
 		}
 		return;
 	}
 	
-	public void words(File f) throws FileNotFoundException{
+	public void fillWords(File Words) throws FileNotFoundException{
 		
-		Scanner fileReader = new Scanner(f);
+		Scanner fileReader = new Scanner(Words);
 		
 		while(fileReader.hasNextLine()){
 			fileWords.add(fileReader.nextLine());
 		}
-		
+		fileReader.close();
 	}
 	private static void gameStartSingleplayer(){
-		
-		secretWord.add(fileWords.get( (int) Math.random()*(fileWords.toArray()).length));
-		
+		secretWord.add(getWord());
 		
 		for(int j = 1 ; j <= 1 ; j--){
 			console.clear();
@@ -128,6 +129,7 @@ public class hangManGame {
 				break;
 			}
 			else{
+				console.clear();
 				console.println("Den svårighetsgraden finns inte, testa igen.");
 				j++;
 			}
@@ -157,19 +159,20 @@ public class hangManGame {
 			
 			difficulty = Integer.parseInt(diffInput);
 			
-			if(difficulty == 1){
+			if(difficulty == 10){
 				lives = 10;
 				break;
 			}
-			else if(difficulty == 2){
+			else if(difficulty == 7){
 				lives = 7;
 				break;
 			}
-			else if(difficulty == 3){
+			else if(difficulty == 5){
 				lives = 5;
 				break;
 			}
 			else{
+				console.clear();
 				console.println("Den svårighetsgraden finns inte, testa igen.");
 				j++;
 			}
@@ -248,12 +251,18 @@ public class hangManGame {
 		}
 		else{	
 			printMan.print(lives); 
+			console.println("You got it Wrong");
 			console.println("You have typed these letters so far:"); 
 			console.println(allGuessedLetters.toString());
 			console.println("The word looks at this:" + guessedArr.toString());
 		}
 		return;
 	}
+	
+	public static String getWord(){
+		return fileWords.get((int) (Math.random()*fileWords.size()));
+	}
+
 	
 	private static void gameWon(){
 		
