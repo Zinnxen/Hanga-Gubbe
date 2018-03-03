@@ -13,6 +13,8 @@ import sun.applet.Main;
 
 public class hangManGame {
 	
+	private static final File File = null;
+
 	public static int lives;
 	
 	public static int difficulty;
@@ -35,7 +37,7 @@ public class hangManGame {
 	
 	private static HangmanConsoleWindow console;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		console = new HangmanConsoleWindow();
 		
 		console.println("Welcome to hangman!");
@@ -43,6 +45,7 @@ public class hangManGame {
 		gamemode();
 		
 		if(gamemode == true){
+			fillWords(File);
 			gameStartSingleplayer();
 		}
 		else{
@@ -96,9 +99,9 @@ public class hangManGame {
 		return;
 	}
 	
-	public void fillWords(File Words) throws FileNotFoundException{
-		
-		Scanner fileReader = new Scanner(Words);
+	public static void fillWords(File Words) throws FileNotFoundException{
+	
+		Scanner fileReader = new Scanner(new File("Words.txt"));
 		
 		while(fileReader.hasNextLine()){
 			fileWords.add(fileReader.nextLine());
@@ -106,25 +109,28 @@ public class hangManGame {
 		fileReader.close();
 	}
 	private static void gameStartSingleplayer(){
+		
+		
 		secretWord.add(getWord());
 		
 		for(int j = 1 ; j <= 1 ; j--){
 			console.clear();
-			console.println("How many lives would you like to have? 1(EASY) or 2(MEDIUM) or 3(HARD)?");
+			console.println("How many lives would you like to have?");
+			console.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
 			
 			String diffInput = console.nextString();
 			
 			difficulty = Integer.parseInt(diffInput);
 			
-			if(difficulty == 1){
+			if(difficulty == 10){
 				lives = 10;
 				break;
 			}
-			else if(difficulty == 2){
+			else if(difficulty == 7){
 				lives = 7;
 				break;
 			}
-			else if(difficulty == 3){
+			else if(difficulty == 5){
 				lives = 5;
 				break;
 			}
@@ -149,7 +155,7 @@ public class hangManGame {
 		guessedArr = (secretString.toUpperCase()).toCharArray();
 			
 		for(int i = 0 ; i < secretString.length() ; i++) {
-				guessedArr[i] = '_';
+				guessedArr[i] = '-';
 		}
 			
 		for(int j = 1 ; j <= 1 ; j--){
@@ -190,8 +196,8 @@ public class hangManGame {
 	
 		while(lives > 0 && !win){	
 			for(int j = 1 ; j <= 1 ; j--){
-				guessedWord = guessedArr.toString();
-				console.println(guessedWord + "|| Vilken bokstav gissar du på?");
+				
+				console.println(guessedArr.toString() + "|| Vilken bokstav gissar du på?");
 				guessedString = console.nextString();
 	
 				if(guessedString.length() > 1){
