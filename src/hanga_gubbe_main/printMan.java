@@ -1,10 +1,6 @@
 package hanga_gubbe_main;
-import java.io.Console;
 
-import jaok.HangmanConsoleWindow;
-public class printMan {
-	
-	private static HangmanConsoleWindow console;
+public class printMan{
 	
 	public static void print(int lives) {
 		
@@ -78,8 +74,8 @@ public class printMan {
 	
 	public static void print0(){
 		System.out.println("   =||=========  ");
-		System.out.println("    ||   /   |   ");
-		System.out.println("    || /     O/  ");
+		System.out.println("    || /     |   ");
+		System.out.println("    ||/      O/  ");
 		System.out.println("    ||	    /|   ");
 		System.out.println("    ||      /|)  ");
 		System.out.println("    ||           ");
@@ -89,8 +85,8 @@ public class printMan {
 	
 	public static void print1(){
 		System.out.println("   =||=========  ");
-		System.out.println("    ||   /   |   ");
-		System.out.println("    || /     O/  ");
+		System.out.println("    || /     |   ");
+		System.out.println("    ||/      O/  ");
 		System.out.println("    ||	    /|   ");
 		System.out.println("    ||           ");
 		System.out.println("    ||           ");
@@ -99,8 +95,8 @@ public class printMan {
 	
 	public static void print2(){
 		System.out.println("   =||=========  ");
-		System.out.println("    ||   /   |   ");
-		System.out.println("    || /     O/  ");
+		System.out.println("    || /     |   ");
+		System.out.println("    ||/      O/  ");
 		System.out.println("    ||	         ");
 		System.out.println("    ||           ");
 		System.out.println("    ||           ");
@@ -109,8 +105,8 @@ public class printMan {
 	
 	public static void print3(){
 		System.out.println("   =||=========  ");
-		System.out.println("    ||   /   |   ");
-		System.out.println("    || /         ");
+		System.out.println("    || /     |   ");
+		System.out.println("    ||/         ");
 		System.out.println("    ||	         ");
 		System.out.println("    ||           ");
 		System.out.println("    ||           ");
@@ -119,8 +115,8 @@ public class printMan {
 	
 	public static void print4(){
 		System.out.println("   =||=======    ");
-		System.out.println("    ||   /       ");
-		System.out.println("    || /         ");
+		System.out.println("    || /       ");
+		System.out.println("    ||/         ");
 		System.out.println("    ||	         ");
 		System.out.println("    ||           ");
 		System.out.println("    ||           ");
@@ -129,8 +125,8 @@ public class printMan {
 	
 	public static void print5(){
 		System.out.println("   =||===        ");
-		System.out.println("    ||           ");
-		System.out.println("    || /         ");
+		System.out.println("    || /        ");
+		System.out.println("    ||/          ");
 		System.out.println("    ||	         ");
 		System.out.println("    ||           ");
 		System.out.println("    ||           ");

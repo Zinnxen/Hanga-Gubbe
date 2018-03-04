@@ -288,7 +288,7 @@ public class hangManGame {
 		printMan.print(lives);
 		System.out.println("You lost, hes now dead... atleast Anton got what he wanted");
 		System.out.println("The word was:");
-		System.out.println(secretWord);
+		System.out.println(WORD);
 		
 		return;
 	}
