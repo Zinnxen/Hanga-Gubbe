@@ -25,6 +25,8 @@ public class hangManGame {
 	
 	private static char[] secretArr;
 	
+	private static char[] wordArr;
+	
 	private static String guessedWord;
 	
 	private static boolean win;
@@ -62,7 +64,7 @@ public class hangManGame {
 				gameWon();
 				break;
 			}
-			else if(lose == false){
+			else if(lose == true){
 				gameLose();
 				break;
 			}
@@ -114,86 +116,33 @@ public class hangManGame {
 	private static void gameStartSingleplayer(){
 		
 		
-		secretWord.add(getWord());
+		secretWord.add(getWordSingleplayer());
+	
 		
 		for(int f = 0 ; f < secretWord.size() ; f++){
-			secretArr[f] = (secretWord.toString()).charAt(f);
+		//	secretArr[f] = secretWord;
 		}
 		
-		for(int j = 1 ; j <= 1 ; j--){
-			consoleClear();
-			System.out.println("How many lives would you like to have?");
-			System.out.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
-			
-			difficulty = sc.nextInt();
-			
-			if(difficulty == 10){
-				lives = 10;
-				break;
-			}
-			else if(difficulty == 7){
-				lives = 7;
-				break;
-			}
-			else if(difficulty == 5){
-				lives = 5;
-				break;
-			}
-			else{
-				consoleClear();
-				System.out.println("Den svårighetsgraden finns inte, testa igen.");
-				j++;
-			}
-				
-		}
+		getDifficulty();
+		
 		return;
 	}
 	
 	private static void gameStartMultiplayer(){
 		
-		System.out.println("What should the secret word be?");
+		getDifficulty();
 		
-		secretWord.add(sc.nextLine().split(" ")[0]);
-		
-		for(int f = 0 ; f < secretWord.size() ; f++){
-			secretArr[f] += ((CharSequence) secretWord).charAt(f);
-		}
+		getWordMultiplayer();
 		
 		consoleClear();
 			
 		String secretString = secretWord.toString(); 
 		guessedArr = (secretString.toUpperCase()).toCharArray();
 			
-		for(int i = 0 ; i < secretString.length() ; i++) {
-				guessedArr[i] = '-';
-		}
+		//for(int i = 0 ; i < secretString.length() ; i++) {
+		//		guessedArr[i] = '-';
+		//}
 			
-		for(int j = 1 ; j <= 1 ; j--){
-			System.out.println("How many lives would you like to have?");
-			System.out.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
-			String diffInput = sc.nextLine();
-			
-			difficulty = Integer.parseInt(diffInput);
-			
-			if(difficulty == 10){
-				lives = 10;
-				break;
-			}
-			else if(difficulty == 7){
-				lives = 7;
-				break;
-			}
-			else if(difficulty == 5){
-				lives = 5;
-				break;
-			}
-			else{
-				consoleClear();
-				System.out.println("Den svårighetsgraden finns inte, testa igen.");
-				j++;
-			}
-				
-		}
 		return;	
 	}
 		
@@ -209,7 +158,7 @@ public class hangManGame {
 				
 				System.out.println(guessedArr);
 				System.out.println("Vilken bokstav gissar du på?");
-				guessedString = sc.nextLine();
+				guessedString = sc.next().toUpperCase();
 	
 				if(guessedString.length() > 1){
 					System.out.println("Du kan bara gissa på en bokstav. Försök igen");
@@ -226,16 +175,12 @@ public class hangManGame {
 				allGuessedLetters.add(guessedString);
 				
 				if(secretWord.contains(guessedLetter)){
-					rightGuess();
-					
+					rightGuess();	
 				}
-			
 				else{
 					wrongGuess();
 				}
-				
 			}
-		
 			else{
 				System.out.println("Du har redan gissat det försök igen");
 				guess();
@@ -285,10 +230,25 @@ public class hangManGame {
 		return;
 	}
 	
-	public static String getWord(){
+	public static String getWordSingleplayer(){
 		return fileWords.get((int) (Math.random()*fileWords.size()));
 	}
-
+	
+	public static void getWordMultiplayer(){
+		
+		System.out.println("What should the secret word be?");
+		String word = sc.next();
+		
+		wordArr = new char[word.toUpperCase().length()];
+		
+		for(int i = 0 ; i < word.length() ; i++){
+			char charLetterTemp = wordArr[i];
+			String stringLetterTemp = String.valueOf(charLetterTemp);
+			secretWord.add(stringLetterTemp);
+		}
+		return;
+		
+	}
 	
 	private static void gameWon(){
 		
@@ -314,6 +274,36 @@ public class hangManGame {
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println(" ");
+		return;
+	}
+	
+	private static void getDifficulty(){
+		for(int j = 1 ; j <= 1 ; j--){
+			System.out.println("How many lives would you like to have?");
+			System.out.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
+			int diffInput = sc.nextInt();
+			
+			difficulty = diffInput;
+			
+			if(difficulty == 10){
+				lives = 10;
+				break;
+			}
+			else if(difficulty == 7){
+				lives = 7;
+				break;
+			}
+			else if(difficulty == 5){
+				lives = 5;
+				break;
+			}
+			else{
+				consoleClear();
+				System.out.println("Den svårighetsgraden finns inte, testa igen.");
+				j++;
+			}
+				
+		}
 		return;
 	}
 		
