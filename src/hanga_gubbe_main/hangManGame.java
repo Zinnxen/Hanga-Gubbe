@@ -110,7 +110,7 @@ public class hangManGame {
 		
 		getDifficulty();
 		
-		secretWord.add(getWordSingleplayer().toUpperCase());
+		getWordSingleplayer();
 		
 		consoleClear();
 		
@@ -122,7 +122,6 @@ public class hangManGame {
 		
 		guessedArr = (secretString.toUpperCase()).toCharArray();
 		secretArr = new char[secretString.length()];
-		System.out.println(guessedArr);
 
 		for (int i = 0; i < secretString.length(); i++) {
 			guessedArr[i] = '-';
@@ -148,7 +147,6 @@ public class hangManGame {
 		
 		guessedArr = (secretString.toUpperCase()).toCharArray();
 		secretArr = new char[secretString.length()];
-		System.out.println(guessedArr);
 
 		for (int i = 0; i < secretString.length(); i++) {
 			guessedArr[i] = '-';
@@ -187,9 +185,6 @@ public class hangManGame {
 			if (!allGuessedLetters.contains(guessedLetter)) {
 				allGuessedLetters.add(guessedString);
 
-				System.out.println("TEST:");
-				System.out.println(secretWord.toString());
-				System.out.println(guessedString);
 
 				if (secretWord.contains(guessedString)) {
 					rightGuess(guessedLetter);
@@ -246,8 +241,19 @@ public class hangManGame {
 		return;
 	}
 
-	public static String getWordSingleplayer() {
-		return fileWords.get((int) (Math.random() * fileWords.size()));
+	public static void getWordSingleplayer() {
+		
+		String word = fileWords.get((int) (Math.random() * fileWords.size()));
+		WORD = word;
+		wordArr = word.toCharArray();
+		
+		for (int i = 0; i < word.length(); i++) {
+			char charLetterTemp = wordArr[i];
+			String stringLetterTemp = String.valueOf(charLetterTemp);
+			secretWord.add(stringLetterTemp);
+		}
+		
+		return; 
 	}
 
 	public static void getWordMultiplayer() {
