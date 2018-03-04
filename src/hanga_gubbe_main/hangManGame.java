@@ -12,90 +12,85 @@ import sun.applet.Main;
 
 
 public class hangManGame {
-	
+
 	private static final File File = null;
 
 	public static int lives;
-	
+
 	public static int difficulty;
-	
-	public static boolean gamemode;		// true == singleplayer ; false == multiplayer
-	
+
+	public static boolean gamemode; // true == singleplayer ; false ==
+									// multiplayer
+
 	private static char[] guessedArr;
-	
+
 	private static char[] secretArr;
-	
+
 	private static char[] wordArr;
-	
+
 	private static String guessedWord;
-	
+
 	private static boolean win;
-	
+
 	private static boolean lose;
-	
+
 	private static ArrayList<String> fileWords = new ArrayList<String>();
-	
+
 	private static ArrayList<String> allGuessedLetters = new ArrayList<String>();
 
 	private static ArrayList<String> secretWord = new ArrayList<String>();
-	
+
 	private static Scanner sc = new Scanner(System.in);
 	
+	private static String WORD;
+
 	public static void main(String[] args) throws FileNotFoundException {
-		
-		
-		
+
 		System.out.println("Welcome to hangman!");
-		
+
 		gamemode();
-		
-		if(gamemode == true){
+
+		if (gamemode == true) {
 			fillWords(File);
 			gameStartSingleplayer();
-		}
-		else{
+		} else {
 			gameStartMultiplayer();
 		}
-		
-		while(win || lose == false){
+
+		while (win || lose == false) {
 			guess();
-				
-			if(win == true){
+
+			if (win == true) {
 				gameWon();
 				break;
-			}
-			else if(lose == true){
+			} else if (lose == true) {
 				gameLose();
 				break;
-			}
-			else{
+			} else {
 				continue;
 			}
-		
-		}		
+
+		}
 	}
-	
-	public static void gamemode(){
-		char singleplayer =+ 's';
+
+	public static void gamemode() {
+		char singleplayer = +'s';
 		char multiplayer = 'm';
 		System.out.println("Do you want to play singleplayer(s)");
 		System.out.println("or multiplayer(m)?");
-		
-		for( int j = 1 ; j <= 1 ; j--){
+
+		for (int j = 1; j <= 1; j--) {
 			char gamemodeInput = sc.next().charAt(0);
-			
-			
-			if(gamemodeInput == singleplayer){
+
+			if (gamemodeInput == singleplayer) {
 				gamemode = true;
 				break;
-			}
-			else if(gamemodeInput == multiplayer){
+			} else if (gamemodeInput == multiplayer) {
 				gamemode = false;
 				break;
-			}
-			else{
+			} else {
 				consoleClear();
-				System.out.print("That gamemode don´t exist.");
+				System.out.print("That gamemode donï¿½t exist.");
 				System.out.println("You can only put 's' or 'm' in.");
 				System.out.println("Try again");
 				j++;
@@ -103,166 +98,172 @@ public class hangManGame {
 		}
 		return;
 	}
-	
-	public static void fillWords(File Words) throws FileNotFoundException{
-	
+
+	public static void fillWords(File Words) throws FileNotFoundException {
+
 		Scanner fileReader = new Scanner(new File("Words.txt"));
-		
-		while(fileReader.hasNextLine()){
+
+		while (fileReader.hasNextLine()) {
 			fileWords.add(fileReader.nextLine());
 		}
 		fileReader.close();
 	}
-	private static void gameStartSingleplayer(){
-		
-		
+
+	private static void gameStartSingleplayer() {
+
 		secretWord.add(getWordSingleplayer());
-	
-		
-		for(int f = 0 ; f < secretWord.size() ; f++){
-		//	secretArr[f] = secretWord;
+
+		for (int f = 0; f < secretWord.size(); f++) {
+			// secretArr[f] = secretWord.get(f);
 		}
-		
+
 		getDifficulty();
-		
+
 		return;
 	}
-	
-	private static void gameStartMultiplayer(){
-		
+
+	private static void gameStartMultiplayer() {
+
 		getDifficulty();
-		
+
 		getWordMultiplayer();
-		
+
 		consoleClear();
-			
-		String secretString = secretWord.toString(); 
+
+		String secretString = "";
+
+		for (int i = 0; i < secretWord.size(); i++) {
+			secretString += secretWord.get(i);
+		}
 		guessedArr = (secretString.toUpperCase()).toCharArray();
-			
-		//for(int i = 0 ; i < secretString.length() ; i++) {
-		//		guessedArr[i] = '-';
-		//}
-			
-		return;	
+		secretArr = new char[secretString.length()];
+		System.out.println(guessedArr);
+
+		for (int i = 0; i < secretString.length(); i++) {
+			guessedArr[i] = '-';
+			secretArr[i] = secretString.charAt(i);
+		}
+
+		return;
 	}
-		
-	private static void guess(){
-			
+
+	private static void guess() {
+
 		win = false;
 		lose = false;
 		char guessedLetter = '-';
 		String guessedString = "-";
-		
-		while(lives > 0 && !win){	
-			for(int j = 1 ; j <= 1 ; j--){
-				
+
+		while (lives > 0 && !win) {
+			for (int j = 1; j <= 1; j--) {
+
 				System.out.println(guessedArr);
-				System.out.println("Vilken bokstav gissar du på?");
+				System.out.println("Vilken bokstav gissar du pï¿½?");
 				guessedString = sc.next().toUpperCase();
-	
-				if(guessedString.length() > 1){
-					System.out.println("Du kan bara gissa på en bokstav. Försök igen");
+
+				if (guessedString.length() > 1) {
+					System.out.println("Du kan bara gissa pï¿½ en bokstav. Fï¿½rsï¿½k igen");
 					j++;
-				}
-				else{
+				} else {
 					guessedLetter = guessedString.charAt(0);
 					break;
 				}
-		
+
 			}
-	
-			if(!allGuessedLetters.contains(guessedLetter)){				
+
+			if (!allGuessedLetters.contains(guessedLetter)) {
 				allGuessedLetters.add(guessedString);
-				
-				if(secretWord.contains(guessedLetter)){
-					rightGuess();	
-				}
-				else{
+
+				System.out.println("TEST:");
+				System.out.println(secretWord.toString());
+				System.out.println(guessedString);
+
+				if (secretWord.contains(guessedString)) {
+					rightGuess(guessedLetter);
+				} else {
 					wrongGuess();
 				}
-			}
-			else{
-				System.out.println("Du har redan gissat det försök igen");
+			} else {
+				System.out.println("Du har redan gissat det fï¿½rsï¿½k igen");
 				guess();
 			}
-			
+
 		}
-		return;
-	}
-	
-	private static void rightGuess(){			
-		consoleClear();
-		
-		if(guessedArr.toString() == secretWord.toString()){
-			win = true;
-		}
-		else{
-			for(int i = 0 ; i < secretWord.size() ; i++){
-				if(guessedArr[i] == secretArr[i]){
-					guessedArr[i] += secretArr[i];
-				}
-			}
-			
-			System.out.println("You got something right!");
-			printMan.print(lives);
-			System.out.println("You have typed these letters so far:");
-			System.out.println(allGuessedLetters.toString());
-			System.out.println("The word now looks at this:");
-			
-		}	
 		return;
 	}
 
-	private static void wrongGuess(){
+	private static void rightGuess(char guessedLetter) {
+		consoleClear();
+
+		for (int i = 0; i < secretArr.length; i++) {
+			if (guessedLetter == secretArr[i]) {
+				guessedArr[i] = secretArr[i];
+			}
+		}
+		
+		if(String.valueOf(guessedArr).equals(WORD)){
+			win = true;
+			
+		}
+
+		System.out.println("You got something right!");
+		// printMan.print(lives);
+		System.out.println("You have typed these letters so far:");
+		System.out.println(allGuessedLetters.toString());
+		System.out.println("The word now looks at this:" );
+
+		return;
+	}
+
+	private static void wrongGuess() {
 		lives--;
 		consoleClear();
-		
-		if(lives == 0){
+
+		if (lives == 0) {
 			lose = true;
-		}
-		else{	
-			printMan.print(lives); 
+		} else {
+			// printMan.print(lives);
 			System.out.println("You got it Wrong");
-			System.out.println("You have typed these letters so far:"); 
+			System.out.println("You have typed these letters so far:");
 			System.out.println(allGuessedLetters.toString());
-			System.out.println("The word looks at this:" + guessedArr.toString());
+			System.out.println("The word looks at this:" + String.valueOf(guessedArr));
 		}
 		return;
 	}
-	
-	public static String getWordSingleplayer(){
-		return fileWords.get((int) (Math.random()*fileWords.size()));
+
+	public static String getWordSingleplayer() {
+		return fileWords.get((int) (Math.random() * fileWords.size()));
 	}
-	
-	public static void getWordMultiplayer(){
-		
+
+	public static void getWordMultiplayer() {
+
 		System.out.println("What should the secret word be?");
-		String word = sc.next();
-		
-		wordArr = new char[word.toUpperCase().length()];
-		
-		for(int i = 0 ; i < word.length() ; i++){
+		String word = sc.next().toUpperCase();
+		WORD = word;
+		wordArr = word.toCharArray();
+
+		for (int i = 0; i < word.length(); i++) {
 			char charLetterTemp = wordArr[i];
 			String stringLetterTemp = String.valueOf(charLetterTemp);
 			secretWord.add(stringLetterTemp);
 		}
 		return;
-		
+
 	}
-	
-	private static void gameWon(){
-		
+
+	private static void gameWon() {
+
 		System.out.println("won");
 		return;
 	}
-	
-	private static void gameLose(){
-		
-		System.out.println("lose");	
+
+	private static void gameLose() {
+
+		System.out.println("lose");
 		return;
 	}
 
-	private static void consoleClear(){
+	private static void consoleClear() {
 		System.out.println(" ");
 		System.out.println(" ");
 		System.out.println(" ");
@@ -276,35 +277,32 @@ public class hangManGame {
 		System.out.println(" ");
 		return;
 	}
-	
-	private static void getDifficulty(){
-		for(int j = 1 ; j <= 1 ; j--){
+
+	private static void getDifficulty() {
+		for (int j = 1; j <= 1; j--) {
 			System.out.println("How many lives would you like to have?");
 			System.out.println("10(EASY) or 7(MEDIUM) or 5(HARD)?");
 			int diffInput = sc.nextInt();
-			
+
 			difficulty = diffInput;
-			
-			if(difficulty == 10){
+
+			if (difficulty == 10) {
 				lives = 10;
 				break;
-			}
-			else if(difficulty == 7){
+			} else if (difficulty == 7) {
 				lives = 7;
 				break;
-			}
-			else if(difficulty == 5){
+			} else if (difficulty == 5) {
 				lives = 5;
 				break;
-			}
-			else{
+			} else {
 				consoleClear();
-				System.out.println("Den svårighetsgraden finns inte, testa igen.");
+				System.out.println("Den svï¿½righetsgraden finns inte, testa igen.");
 				j++;
 			}
-				
+
 		}
 		return;
 	}
-		
+
 }
